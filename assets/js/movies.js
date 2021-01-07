@@ -3,6 +3,7 @@ let posterApi = 'http://img.omdbapi.com/?s=';
 let apiKey = '&apikey=15761393';
 let movieName = "";
 let movieFormEl = document.querySelector('#search-movie');
+let nominateEl = document.querySelector('.movie-names')
 let errorSearchEl = document.querySelector('.error-msg');
 let movieInputEl = document.querySelector('#movie-input');
 
@@ -24,23 +25,26 @@ let getMovies = function(movieName) {
             let resultsEl = document.querySelector('.movie-names');
             let results = document.createElement('h3');
             resultsEl.appendChild(results);
-            resultsEl.textContent = "Results for: " + movieName;
+            results.textContent = "Results for: " + movieName;
 
             for (let i = 0; i < data["Search"].length; i++) {
-                let displayMovie = data["Search"][i]["Title"];
-                // Search results
-                let movieNameEl = document.querySelector('.movie-names');
-                let movieNm = document.createElement('input');
-                movieNameEl.appendChild(movieNm);
-                movieNm.placeholder = displayMovie;
-                movieNm.className = "no-outline";
-                movieNm.id = "movie-rm";
-                // Buttons
-                let movieBtnEl = document.querySelector('.movie-names'); 
-                let movieBtn = document.createElement('button');
-                movieBtnEl.appendChild(movieBtn); 
-                movieBtn.textContent = "Nominate";
-                movieBtn.is = "movie-rm"
+                if (data["Search"][i]["Type"] === "movie") {
+                    let displayMovie = data["Search"][i]["Title"];
+                    // Search results
+                    let movieNameEl = document.querySelector('.movie-names');
+                    let movieNm = document.createElement('p');
+                    movieNameEl.appendChild(movieNm);
+                    movieNm.innerHTML = displayMovie;
+                    // movieNm.className = "no-outline";
+                    // Buttons
+                    let movieBtnEl = document.querySelector('.movie-names'); 
+                    let movieBtn = document.createElement('button');
+                    movieBtnEl.appendChild(movieBtn); 
+                    movieBtn.type = 'submit';
+                    movieBtn.value = displayMovie;
+                    movieBtn.textContent = "Nominate";
+                    movieBtn.id = "button";
+                }
             }
 
             });
@@ -65,5 +69,24 @@ let getSearchName = function (event) {
     }
 };
 
+let saveNominee = function (event) {
+    event.preventDefault();
+    let displayMovie = event.submitter.value;
+    // Search results
+    let movieNameEl = document.querySelector('.nominations');
+    let movieNm = document.createElement('p');
+    movieNameEl.appendChild(movieNm);
+    movieNm.innerHTML = displayMovie;
+    // movieNm.className = "no-outline";
+    // Buttons
+    let movieBtnEl = document.querySelector('.nominations'); 
+    let movieBtn = document.createElement('button');
+    movieBtnEl.appendChild(movieBtn); 
+    movieBtn.type = 'submit';
+    movieBtn.value = displayMovie;
+    movieBtn.textContent = "Remove";
+    movieBtn.id = "button"
+};
 
 movieFormEl.addEventListener("submit", getSearchName);
+nominateEl.addEventListener("submit", saveNominee);
