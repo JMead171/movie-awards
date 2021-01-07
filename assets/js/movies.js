@@ -15,14 +15,32 @@ let getMovies = function(movieName) {
             response.json().then(function (data) {
             console.log(data);
             
+            let inputEl = document.getElementById('movie-rm');
+            if (inputEl != null) {
+                inputEl.placeholder = " ";
+                inputEl.textContent = " ";
+            };
+
+            let resultsEl = document.querySelector('.movie-names');
+            let results = document.createElement('h3');
+            resultsEl.appendChild(results);
+            resultsEl.textContent = "Results for: " + movieName;
+
             for (let i = 0; i < data["Search"].length; i++) {
                 let displayMovie = data["Search"][i]["Title"];
-                // displayMovie.textContent = "";
+                // Search results
                 let movieNameEl = document.querySelector('.movie-names');
-                let movieNm = document.createElement('p');
-                // movieNameEl.textContent = "";
+                let movieNm = document.createElement('input');
                 movieNameEl.appendChild(movieNm);
-                movieNm.textContent = displayMovie;    
+                movieNm.placeholder = displayMovie;
+                movieNm.className = "no-outline";
+                movieNm.id = "movie-rm";
+                // Buttons
+                let movieBtnEl = document.querySelector('.movie-names'); 
+                let movieBtn = document.createElement('button');
+                movieBtnEl.appendChild(movieBtn); 
+                movieBtn.textContent = "Nominate";
+                movieBtn.is = "movie-rm"
             }
 
             });

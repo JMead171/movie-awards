@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #000000;
+    --secondary: rgb(126, 119, 119);
+    --tertiary: rgb(126, 119, 119);
+}
+
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.movie-area {
+    padding: 10px;
+}
+
+.movie-names {
+    padding: 5px;
+    width: 300px;
+    display: inline-block;
+}
+
+
+.movie-names input{
+    padding: 5px 0;
+}
+
+.no-outline {
+    border: none;
+}
+
+/* placeholder */
+.movie-names input::-webkit-input-placeholder {
+    color:var(--primary);
+}
+.movie-names input:-moz-placeholder {
+    /* FF 4-18 */
+    color:var(--primary);
+    opacity: 1;
+}
+.movie-names input::-moz-placeholder {
+    /* FF 19+ */
+    color: var(--primary);
+    opacity: 1;
+}
+.movie-names input:-ms-input-placeholder {
+    /* IE 10+ */
+    color: var(--primary);
+}
+.movie-names input::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: var(--primary);
+}
+
+.movie-names input::placeholder {
+    color: var(--primary);
+}
+
+.nominations {
+    padding: 5px;
+    width: 225px;
+    display:inline-block;
+    vertical-align: top;
+}
