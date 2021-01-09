@@ -24,6 +24,7 @@ let getMovies = function(movieName) {
                 inputEl.textContent = " ";
             };
 
+            movieSearch = {};
             let resultsEl = document.querySelector('.movie-names');
             let results = document.createElement('h3');
             resultsEl.appendChild(results);
@@ -39,7 +40,6 @@ let getMovies = function(movieName) {
                     let movieNm = document.createElement('p');
                     movieNameEl.appendChild(movieNm);
                     movieNm.innerHTML = displayMovie + ", " + displayYear;
-                    // movieNm.className = "no-outline";
                     // Buttons
                     let movieBtnEl = document.querySelector('.movie-names'); 
                     let movieBtn = document.createElement('button');
@@ -49,6 +49,13 @@ let getMovies = function(movieName) {
                     movieBtn.textContent = "Nominate";
                     movieBtn.id = "button"+i;
                     movieSearch[movieNm.innerHTML] = movieBtn.id;
+                }
+            }
+            console.log("Help: ", movieSearch);
+            for (let i = 0; i < movieArr.length; i++) {
+                if (movieArr[i] in movieSearch) {
+                    let enable = movieSearch[movieArr[i]];
+                    document.getElementById(enable).disabled = true;
                 }
             }
             console.log("Obj: ", movieSearch);
@@ -109,10 +116,10 @@ let removeNominee = function (event) {
                 movieArr.splice(i,1);
                 localStorage.setItem("Nomination", JSON.stringify(movieArr));
                 let enable = movieSearch[removeMovie];
-                document.getElementById(enable).disabled = false;
-                console.log(movieSearch[removeMovie]);
-                // movieSearch[removeMovie].disabled = 'false';
-
+                if (document.getElementById(enable) != null) {
+                    document.getElementById(enable).disabled = false;
+   
+                }
             }   
         }
         let inputEl = document.getElementById('nom-rm');
