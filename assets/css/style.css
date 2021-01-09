@@ -5,13 +5,50 @@
 }
 
 :root {
-    --primary: #000000;
-    --secondary: rgb(126, 119, 119);
-    --tertiary: rgb(126, 119, 119);
+    --primary: #972b2b;
+    --secondary: rgb(255, 255, 255);
+    --tertiary: rgb(214, 177, 122);
+    --quaternary: #000000;
 }
 
 body {
+    background-color: var(--tertiary);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+header {
+    padding: 10px 0;
+    height: 75px;
+    background-color: var(--primary);
+}
+
+h1 {
+    background-color: var(--primary);
+    color: var(--secondary);
+    text-align: center;
+}
+.search-btn {
+    color: var(--secondary);
+    background-color: var(--primary);
+    border-radius: 6px;
+}
+
+.search-btn:hover {
+    color: var(--quaternary);
+    background-color: var(--secondary);
+    border-radius: 6px;
+}
+
+#search-movie {
+    text-align: center;
+}
+.results {
+    display: inline-block;
+}
+
+.for-results {
+    color: var(--primary);
+    display: inline-block;
 }
 
 .movie-area {
@@ -24,9 +61,10 @@ body {
     display: inline-block;
 }
 
-.movie-names p{
+.movie-names p {
+    color: rgb(25, 68, 43);
     padding: 5px 0;
-    font-size: 12px;
+    font-size: 16px;
     display: inline-block;
     width: 350px;
 }

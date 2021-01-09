@@ -1,3 +1,4 @@
+// Declare variables
 let movieApi = 'http://www.omdbapi.com/?s=';
 let posterApi = 'http://img.omdbapi.com/?s=';
 let apiKey = '&apikey=15761393';
@@ -10,14 +11,14 @@ let movieInputEl = document.querySelector('#movie-input');
 let movieArr = [];
 let movieSearch = {};
 
-
+// Fetch API and create DOM elements from search results
 let getMovies = function(movieName) {
     let apiUrl = movieApi + movieName + apiKey;
     fetch(apiUrl)
     .then(function (response) {
         if (response.ok) {
             response.json().then(function (data) {
-            console.log(data);
+            // console.log(data);
             
             let inputEl = document.getElementById('movie-rm');
             if (inputEl != null) {
@@ -27,20 +28,27 @@ let getMovies = function(movieName) {
             movieSearch = {};
             let resultsEl = document.querySelector('.movie-names');
             let results = document.createElement('h3');
+            results.classList.add("results");
             resultsEl.appendChild(results);
-            results.textContent = "Results for: " + movieName;
+            results.textContent = "Results for: ";
+            let forMovieEl = document.querySelector('.movie-names');
+            let forMovie = document.createElement('h3');
+            forMovie.classList.add("for-results");
+            forMovieEl.appendChild(forMovie);
+            forMovie.innerHTML = `&nbsp` + movieName.toUpperCase();
+           
 
             for (let i = 0; i < data["Search"].length; i++) {
                 if (data["Search"][i]["Type"] === "movie") {
                     let displayMovie = data["Search"][i]["Title"];
                     let displayYear = data["Search"][i]["Year"];
 
-                    // Search results
+                    // Create DOM elements for search results
                     let movieNameEl = document.querySelector('.movie-names');
                     let movieNm = document.createElement('p');
                     movieNameEl.appendChild(movieNm);
                     movieNm.innerHTML = displayMovie + ", " + displayYear;
-                    // Buttons
+                    // Create DOM nominate buttons
                     let movieBtnEl = document.querySelector('.movie-names'); 
                     let movieBtn = document.createElement('button');
                     movieBtnEl.appendChild(movieBtn); 
@@ -51,14 +59,13 @@ let getMovies = function(movieName) {
                     movieSearch[movieNm.innerHTML] = movieBtn.id;
                 }
             }
-            console.log("Help: ", movieSearch);
+            // Check to disable nominate button
             for (let i = 0; i < movieArr.length; i++) {
                 if (movieArr[i] in movieSearch) {
                     let enable = movieSearch[movieArr[i]];
                     document.getElementById(enable).disabled = true;
                 }
             }
-            console.log("Obj: ", movieSearch);
             });
         } else {
             console(response.statustext);
@@ -69,6 +76,7 @@ let getMovies = function(movieName) {
     });
 };
 
+// Get movie name from search 
 let getSearchName = function (event) {
     event.preventDefault();
     errorSearchEl.textContent = "";
@@ -81,18 +89,18 @@ let getSearchName = function (event) {
     }
 };
 
+// Save nominated movie to local storage and DOM
 let saveNominee = function (event) {
     event.preventDefault();
-    console.log("Button....: ", event);
     event.submitter.disabled = "true";
     let displayMovie = event.submitter.value;
-    // Search results
+    // Create DOM for nominated movies
     let movieNameEl = document.querySelector('.nominations');
     let movieNm = document.createElement('p');
     movieNameEl.appendChild(movieNm);
     movieNm.innerHTML = displayMovie;
     saveToStorage(displayMovie);
-    // Buttons
+    // Create DOM remove buttons
     let movieBtnEl = document.querySelector('.nominations'); 
     let movieBtn = document.createElement('button');
     movieBtnEl.appendChild(movieBtn); 
@@ -102,10 +110,9 @@ let saveNominee = function (event) {
     movieBtn.id = "button"
 };
 
-
+// Remove nominated movie from local storage and DOM
 let removeNominee = function (event) {
     event.preventDefault();
-    console.log("Remove.....", event.submitter.value);
     let removeMovie = event.submitter.value;
     if ("Nomination" in localStorage) {
         let storageData = localStorage.getItem("Nomination");
@@ -134,6 +141,7 @@ let removeNominee = function (event) {
     }
 };
 
+// Save nominations to local storage
 let saveToStorage = function (movie) {
     if ("Nomination" in localStorage) {
         let storageData = localStorage.getItem("Nomination");
@@ -144,6 +152,7 @@ let saveToStorage = function (movie) {
     localStorage.setItem("Nomination", JSON.stringify(movieArr));
 };
 
+// First time load nominations from local storage
 let loadNominations = function () {
     if ("Nomination" in localStorage) {
         let storageData = localStorage.getItem("Nomination");
@@ -151,12 +160,12 @@ let loadNominations = function () {
 
         for (let i = 0; i < movieArr.length; i++) {
             let displayMovie = movieArr[i];
-            // Search results
+            // Create DOM nominations from local storage
             let movieNameEl = document.querySelector('.nominations');
             let movieNm = document.createElement('p');
             movieNameEl.appendChild(movieNm);
             movieNm.innerHTML = displayMovie;
-            // Buttons
+            // Create DOM remove buttons
             let movieBtnEl = document.querySelector('.nominations'); 
             let movieBtn = document.createElement('button');
             movieBtnEl.appendChild(movieBtn); 
@@ -168,7 +177,10 @@ let loadNominations = function () {
     } 
 };
 
+// First time in 
 loadNominations();
+
+// Listen for button clicks
 movieFormEl.addEventListener("submit", getSearchName);
 nominateEl.addEventListener("submit", saveNominee);
 removeNomEl.addEventListener("submit", removeNominee);
