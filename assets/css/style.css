@@ -10,6 +10,9 @@
     --tertiary: rgb(214, 177, 122);
     --quaternary: #000000;
     --quinary:  rgb(25, 68, 43);
+    --error: rgb(68 66 213);
+    --flash1: red;
+    --flash2: blue;
 }
 
 body {
@@ -49,6 +52,13 @@ h1 {
 #search-movie h3 {
     margin: 0 0 10px 0;
     text-align: center;
+}
+
+.error-msg {
+    color:var(--error);
+    margin-top: 10px;
+    background-color: var(--secondary);
+    display: inline-block;
 }
 
 .results {
@@ -117,6 +127,25 @@ footer{
 footer h2 {
     margin: 150px;
 }
+
+.blink {
+    animation: blink 1s steps(1, end) 3;
+  }
+  
+  @keyframes blink {
+    0% {
+      color: var(--flash1);  
+      /* opacity: 1; */
+    }
+    50% {
+        color: var(--flash2);
+      /* opacity: 0; */
+    }
+    100% {
+        color: black;
+      /* opacity: 1; */
+    }
+  }
 
 @media screen and (max-width: 540px) {
     footer h2 {

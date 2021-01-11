@@ -37,28 +37,32 @@ let getMovies = function(movieName) {
             forMovieEl.appendChild(forMovie);
             forMovie.innerHTML = `&nbsp` + movieName.toUpperCase();
            
+            if (!data["Search"]) {
+                errorSearchEl.textContent = "** Sorry no movies found, try again **";
+            } else {
+                for (let i = 0; i < data["Search"].length; i++) {
+                    if (data["Search"][i]["Type"] === "movie") {
+                        let displayMovie = data["Search"][i]["Title"];
+                        let displayYear = data["Search"][i]["Year"];
 
-            for (let i = 0; i < data["Search"].length; i++) {
-                if (data["Search"][i]["Type"] === "movie") {
-                    let displayMovie = data["Search"][i]["Title"];
-                    let displayYear = data["Search"][i]["Year"];
-
-                    // Create DOM elements for search results
-                    let movieNameEl = document.querySelector('.movie-names');
-                    let movieNm = document.createElement('p');
-                    movieNameEl.appendChild(movieNm);
-                    movieNm.innerHTML = displayMovie + ", " + displayYear;
-                    // Create DOM nominate buttons
-                    let movieBtnEl = document.querySelector('.movie-names'); 
-                    let movieBtn = document.createElement('button');
-                    movieBtnEl.appendChild(movieBtn); 
-                    movieBtn.type = 'submit';
-                    movieBtn.value = displayMovie + ", " + displayYear;
-                    movieBtn.textContent = "Nominate";
-                    movieBtn.id = "button"+i;
-                    movieSearch[movieNm.innerHTML] = movieBtn.id;
+                        // Create DOM elements for search results
+                        let movieNameEl = document.querySelector('.movie-names');
+                        let movieNm = document.createElement('p');
+                        movieNameEl.appendChild(movieNm);
+                        movieNm.innerHTML = displayMovie + ", " + displayYear;
+                        // Create DOM nominate buttons
+                        let movieBtnEl = document.querySelector('.movie-names'); 
+                        let movieBtn = document.createElement('button');
+                        movieBtnEl.appendChild(movieBtn); 
+                        movieBtn.type = 'submit';
+                        movieBtn.value = displayMovie + ", " + displayYear;
+                        movieBtn.textContent = "Nominate";
+                        movieBtn.id = "button"+i;
+                        movieSearch[movieNm.innerHTML] = movieBtn.id;
+                    }
                 }
             }
+
             // Check to disable nominate button
             for (let i = 0; i < movieArr.length; i++) {
                 if (movieArr[i] in movieSearch) {
@@ -118,6 +122,15 @@ let removeNominee = function (event) {
         let storageData = localStorage.getItem("Nomination");
         movieArr = JSON.parse(storageData);
 
+        let banner = document.querySelector('.five-movies');
+        if (movieArr.length >= 5 ) {
+            banner.innerHTML = "Thank you for nominating at least 5 movies!";
+            banner.classList.add("blink");
+        } else {
+            banner.innerHTML = "";
+            banner.classList.remove("blink");
+        };
+
         for (let i = 0; i < movieArr.length; i++) {
             if (removeMovie === movieArr[i]) {
                 movieArr.splice(i,1);
@@ -129,6 +142,7 @@ let removeNominee = function (event) {
                 }
             }   
         }
+
         let inputEl = document.getElementById('nom-rm');
         if (inputEl != null) {
             inputEl.textContent = " ";
@@ -146,9 +160,25 @@ let saveToStorage = function (movie) {
     if ("Nomination" in localStorage) {
         let storageData = localStorage.getItem("Nomination");
         movieArr = JSON.parse(storageData);
+        let banner = document.querySelector('.five-movies');
+        if (movieArr.length >= 5 ) {
+            banner.innerHTML = "Thank you for nominating at least 5 movies!"
+            banner.classList.add("blink");
+        } else {
+            banner.innerHTML = "";
+            banner.classList.remove("blink");
+        };
     };
 
     movieArr.push(movie);
+    let banner = document.querySelector('.five-movies');
+    if (movieArr.length >= 5 ) {
+        banner.innerHTML = "Thank you for nominating at least 5 movies!"
+        banner.classList.add("blink");
+    } else {
+        banner.classList.remove("blink");
+        banner.innerHTML = "";
+    };
     localStorage.setItem("Nomination", JSON.stringify(movieArr));
 };
 
@@ -157,6 +187,16 @@ let loadNominations = function () {
     if ("Nomination" in localStorage) {
         let storageData = localStorage.getItem("Nomination");
         movieArr = JSON.parse(storageData);
+
+        let banner = document.querySelector('.five-movies');
+        if (movieArr.length >= 5 ) {
+            let banner = document.querySelector('.five-movies');
+            banner.innerHTML = "Thank you for nominating at least 5 movies!"
+            banner.classList.add("blink");
+        } else {
+            banner.innerHTML = "";
+            banner.classList.remove("blink");
+        };
 
         for (let i = 0; i < movieArr.length; i++) {
             let displayMovie = movieArr[i];
