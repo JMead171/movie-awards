@@ -1,5 +1,5 @@
 // Declare variables
-let movieApi = 'http://www.omdbapi.com/?s=';
+let movieApi = 'https://www.omdbapi.com/?s=';
 let posterApi = 'http://img.omdbapi.com/?s=';
 let apiKey = '&apikey=15761393';
 let movieName = "";

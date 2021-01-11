@@ -45,7 +45,7 @@ JavaScript, HTML5, CSS, Media Queries and API.
 
 
 ## Screen Shot
-![image](https://user-images.githubusercontent.com/64744763/104218283-856f4480-540a-11eb-94b8-3f606aac4451.png)
+![image](https://user-images.githubusercontent.com/64744763/104223864-33cab800-5412-11eb-8770-75584a58e2f1.png)
 
   
 ## Questions
