@@ -1,6 +1,6 @@
 // Declare variables
 let movieApi = 'https://www.omdbapi.com/?s=';
-let posterApi = 'http://img.omdbapi.com/?s=';
+// let posterApi = 'https://img.omdbapi.com/?s=';
 let apiKey = '&apikey=15761393';
 let movieName = "";
 let movieFormEl = document.querySelector('#search-movie');
